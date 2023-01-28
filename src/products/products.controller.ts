@@ -33,7 +33,7 @@ export class ProductsController {
 
   @Delete(':id')
   remove(@Param(':id') id: string) {
-    return `Remove ${id}`;
+    return `Remove  ${id}`;
   }
 
   @Put(':id')
