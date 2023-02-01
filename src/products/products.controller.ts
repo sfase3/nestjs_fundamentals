@@ -3,10 +3,12 @@ import {
   Controller,
   Delete,
   Get,
+  Header,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Put,
-  Redirect,
 } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -16,24 +18,25 @@ import { ProductsService } from './products.service';
 export class ProductsController {
   constructor(private readonly productService: ProductsService) {}
   @Get()
-  @Redirect('https://google.com', 301)
-  getAll(): string[] {
+  getAll() {
     return this.productService.getAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string): string {
+  getOne(@Param('id') id: string) {
     return this.productService.getById(id);
   }
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
+  @Header('Cache-Control', 'none')
   create(@Body() product: CreateProductDto) {
     return this.productService.create(product);
   }
 
   @Delete(':id')
   remove(@Param(':id') id: string) {
-    return `Remove  ${id}`;
+    return this.productService.remove(id);
   }
 
   @Put(':id')
