@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -7,6 +7,6 @@ export class AppController {
 
   @Get()
   generateException() {
-    throw new HttpException('Forbidden to fetch /', HttpStatus.FORBIDDEN);
+    return this.appService.generateError();
   }
 }
